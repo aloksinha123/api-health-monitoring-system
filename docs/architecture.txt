@@ -1,0 +1,2 @@
+# Architecture Notes
+This file will contain the architecture details for the API Health Monitoring System.

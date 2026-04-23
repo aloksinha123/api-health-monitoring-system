@@ -195,28 +195,25 @@ async function deleteAPI(api_id) {
     if (!confirm("Delete this API?")) return;
 
     try {
-        // Optional subtle visual cue on delete could go here, for now using direct API call
         const res = await fetch(DELETE_API_URL, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ api_id })
         });
 
-        const data = await res.json();
-        console.log("DELETE RESPONSE:", data);
-
         if (res.ok) {
             alert("Deleted successfully");
             loadData(); // refresh UI
         } else {
-            alert("Delete failed");
+            const errorMsg = await res.text();
+            alert(`Delete failed: ${res.status} ${res.statusText}\n${errorMsg}`);
         }
 
     } catch (err) {
-        console.error(err);
-        alert("Error deleting API");
+        console.error("Delete Error:", err);
+        alert("Error deleting API: " + err.message);
     }
 }
 
